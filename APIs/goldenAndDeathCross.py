@@ -1,0 +1,40 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from APIs import general_APIs as general
+
+plt.style.use('seaborn-darkgrid')
+
+# Tick interval on date axis when plotting
+every_nth = 20
+
+def getMovingAverage(dataFr, colName='Close', nDays=50):
+    dataFr['movingAverage_{}'.format(nDays)] = dataFr[colName].rolling(nDays).mean()
+    
+    return dataFr
+
+def analyzeGoldenAndDeathCross(companyName='GOOG', nDays_short=50, nDays_long=200):
+    # Load dataframe for company
+    dataFr = general.loadCompanyData(companyName)
+    
+    # Create moving average columns
+    dataFr = getMovingAverage(dataFr, colName='Close', nDays=nDays_short)
+    dataFr = getMovingAverage(dataFr, colName='Close', nDays=nDays_long)
+    
+    fig = plt.figure(figsize=(10,10))
+    ax = fig.add_subplot(111)
+    ax.plot(dataFr['Date'].to_list(),
+            dataFr['Close'].to_list(),
+            label='Closing');
+    ax.plot(dataFr['Date'].to_list(),
+            dataFr['movingAverage_{}'.format(nDays_short)].to_list(),
+            label='{}-day SMA'.format(nDays_short),
+            linewidth=3);
+    ax.plot(dataFr['Date'].to_list(),
+            dataFr['movingAverage_{}'.format(nDays_long)].to_list(),
+            label='{}-day SMA'.format(nDays_long),
+            linewidth=3);
+    plt.xticks(rotation=45, ha="right");
+    for n, label in enumerate(ax.xaxis.get_ticklabels()):
+        if n % every_nth != 0:
+            label.set_visible(False)
+    plt.legend(prop={'size': 20})
