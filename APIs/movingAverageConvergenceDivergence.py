@@ -8,7 +8,13 @@ plt.style.use('seaborn-darkgrid')
 every_nth = 20
 
 def getExponentialMovingAverage(dataFr, colName='Close', nDays=12):
-    dataFr['EMA_{}'.format(nDays)] = dataFr[colName].ewm(span=nDays, adjust=False).mean()
+    # Calculate SMA
+    sma = dataFr[colName].rolling(nDays).mean()
+    modifiedCol = dataFr[colName].copy()
+    # Replace initial values with NA
+    modifiedCol.iloc[0:nDays] = sma[0:nDays]
+    
+    dataFr['EMA_{}'.format(nDays)] = modifiedCol.ewm(span=nDays, adjust=False).mean()
     
     return dataFr
 

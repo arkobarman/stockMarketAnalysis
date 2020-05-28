@@ -12,9 +12,9 @@ def getMovingAverage(dataFr, colName='Close', nDays=50):
     
     return dataFr
 
-def analyzeGoldenAndDeathCross(companyName='GOOG', nDays_short=50, nDays_long=200):
+def analyzeGoldenAndDeathCross(companyName='GOOG', nDays_short=50, nDays_long=200, start='2019-10-31'):
     # Load dataframe for company
-    dataFr = general.loadCompanyData(companyName)
+    dataFr = general.loadCompanyData(companyName, start=start)
     
     # Create moving average columns
     dataFr = getMovingAverage(dataFr, colName='Close', nDays=nDays_short)
