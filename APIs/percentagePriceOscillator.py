@@ -31,7 +31,7 @@ def getSignalLine(dataFr, colName='PPO', nDays=9, n2=26):
     return dataFr
 
 # Compute and plot percentage price oscillator
-def computeAndPlotPercentagePriceOscillator(companyName='GOOG', start='2020-01-01', n1=12, n2=26, every_nth=20):
+def computeAndPlotPercentagePriceOscillator(companyName='GOOG', start='2020-01-01', n1=12, n2=26, n3=9, every_nth=20):
     # Load dataframe for company
     dataFr = general.loadCompanyData(companyName, start=start)
     
@@ -40,7 +40,7 @@ def computeAndPlotPercentagePriceOscillator(companyName='GOOG', start='2020-01-0
     
     dataFr['PPO'] = dataFr.apply(lambda row: (row['EMA_{}'.format(n1)] - row['EMA_{}'.format(n2)])*100/row['EMA_{}'.format(n2)], axis = 1)
     
-    dataFr = getSignalLine(dataFr, colName='PPO', nDays=9, n2=n2)
+    dataFr = getSignalLine(dataFr, colName='PPO', nDays=n3, n2=n2)
     
     dataFr['PPO_histogram'] = dataFr.apply(lambda row: row['PPO'] - row['SignalLine'], axis=1)
     
@@ -65,6 +65,9 @@ def computeAndPlotPercentagePriceOscillator(companyName='GOOG', start='2020-01-0
             if n % every_nth != 0:
                 label.set_visible(False)
     plt.xticks(rotation=45, ha="right");
+    ax0.plot(dateList, dataFr['EMA_{}'.format(n1)].to_list(), color='y', linewidth=3, label='{}-day EMA'.format(n1))
+    ax0.plot(dateList, dataFr['EMA_{}'.format(n2)].to_list(), color='m', linewidth=3, label='{}-day EMA'.format(n2))
+    plt.legend(prop={'size': 12}, loc='upper left');
     
     # the second subplot
     ax1 = plt.subplot(gs[1], sharex=ax0)
