@@ -20,7 +20,7 @@ def analyzeGoldenAndDeathCross(companyName='GOOG', nDays_short=50, nDays_long=20
     dataFr = getMovingAverage(dataFr, colName='Close', nDays=nDays_short)
     dataFr = getMovingAverage(dataFr, colName='Close', nDays=nDays_long)
     
-    fig = plt.figure(figsize=(10,10))
+    fig = plt.figure(figsize=(20,10))
     ax = fig.add_subplot(111)
     ax.plot(dataFr['Date'].to_list(),
             dataFr['Close'].to_list(),
