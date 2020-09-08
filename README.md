@@ -1,5 +1,5 @@
-# stockMarketAnalysis
-metrics for stock market analysis
+# Stock Market Analysis
+Defines and plots certain metrics for stock market analysis for a given ticker symbol
 
 Details of golden cross and death cross: 
 https://www.investopedia.com/terms/g/goldencross.asp
