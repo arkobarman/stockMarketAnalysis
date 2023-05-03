@@ -11,14 +11,11 @@ def loadCompanyData(companyName='GOOG', start='2019-10-31'):
     # Get today's date
     today = date.today()
     
-    # Get yesterday's date
-    yesterday = today - timedelta(days = 1) 
-    
     # get data on this ticker
     tickerData = yf.Ticker(companyName)
 
     # get the historical prices for this ticker
-    tickerFr = tickerData.history(period='1d', start=start, end=yesterday)
+    tickerFr = tickerData.history(period='1d', start=start, end=today)
     
     # Insert a date column
     dates = tickerFr.index.values

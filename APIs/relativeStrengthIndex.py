@@ -31,7 +31,7 @@ def getRSI(companyName='GOOG', start='2020-01-01', n=14, every_nth=20):
     
     
     # Plot data
-    fig = plt.figure(figsize=(20,10))
+    fig = plt.figure(figsize=(20,15))
     # set height ratios for sublots
     gs = gridspec.GridSpec(2, 1, height_ratios=[2, 1]) 
 
@@ -51,6 +51,8 @@ def getRSI(companyName='GOOG', start='2020-01-01', n=14, every_nth=20):
             if n % every_nth != 0:
                 label.set_visible(False)
     plt.xticks(rotation=45, ha="right");
+    ax0.tick_params(axis='y', labelsize=20)
+    ax0.tick_params(axis='x', labelsize=16)
     
     # the second subplot
     ax1 = plt.subplot(gs[1], sharex=ax0)
@@ -66,4 +68,6 @@ def getRSI(companyName='GOOG', start='2020-01-01', n=14, every_nth=20):
                 label.set_visible(False)
     plt.xticks(rotation=45, ha="right");
     plt.yticks([0, 30, 50, 70, 100])
-    plt.legend(prop={'size': 12}, loc='upper left');
+    plt.legend(prop={'size': 15}, loc='upper left');
+    ax1.tick_params(axis='y', labelsize=20)
+    ax1.tick_params(axis='x', labelsize=16)

@@ -23,7 +23,7 @@ def getSignalLine(dataFr, colName='PPO', nDays=9, n2=26):
     # Calculate SMA
     sma = dataFr[colName].rolling(nDays).mean()
     modifiedCol = dataFr[colName].copy()
-    # Replace initial values with NA
+    # Impute missing initial values (for n2 days) with simple moving average
     modifiedCol.iloc[0:nDays+n2] = sma[0:nDays+n2]
     
     dataFr['SignalLine'.format(nDays)] = modifiedCol.ewm(span=nDays, adjust=False).mean()
@@ -43,9 +43,10 @@ def computeAndPlotPercentagePriceOscillator(companyName='GOOG', start='2020-01-0
     dataFr = getSignalLine(dataFr, colName='PPO', nDays=n3, n2=n2)
     
     dataFr['PPO_histogram'] = dataFr.apply(lambda row: row['PPO'] - row['SignalLine'], axis=1)
+    dataFr['PPO_hist_positive'] = dataFr['PPO_histogram'] > 0
     
     # Plot data
-    fig = plt.figure(figsize=(20,10))
+    fig = plt.figure(figsize=(20,15))
     # set height ratios for sublots
     gs = gridspec.GridSpec(2, 1, height_ratios=[2, 1]) 
 
@@ -67,25 +68,29 @@ def computeAndPlotPercentagePriceOscillator(companyName='GOOG', start='2020-01-0
     plt.xticks(rotation=45, ha="right");
     ax0.plot(dateList, dataFr['EMA_{}'.format(n1)].to_list(), color='y', linewidth=3, label='{}-day EMA'.format(n1))
     ax0.plot(dateList, dataFr['EMA_{}'.format(n2)].to_list(), color='m', linewidth=3, label='{}-day EMA'.format(n2))
-    plt.legend(prop={'size': 12}, loc='upper left');
+    plt.legend(prop={'size': 15});
+    ax0.tick_params(axis='y', labelsize=20)
+    ax0.tick_params(axis='x', labelsize=16)
     
     # the second subplot
     ax1 = plt.subplot(gs[1], sharex=ax0)
     ax1.plot(dataFr['Date'].to_list(),
              dataFr['PPO'].to_list(),
              label='PPO',
-             c='r');
+             c='purple');
     ax1.plot(dataFr['Date'].to_list(),
              dataFr['SignalLine'].to_list(),
              label='Signal Line',
-             c='k');
+             c='lightseagreen');
     ax1.bar(dataFr['Date'].to_list(),
             dataFr['PPO_histogram'].to_list(),
             label='PPO histogram',
             width=0.2,
-            color='g')
+            color=dataFr['PPO_hist_positive'].map({True: 'g', False: 'r'}))
     for n, label in enumerate(ax1.xaxis.get_ticklabels()):
             if n % every_nth != 0:
                 label.set_visible(False)
     plt.xticks(rotation=45, ha="right");
-    plt.legend(prop={'size': 12}, loc='upper left');
+    plt.legend(prop={'size': 15}, loc='upper left');
+    ax1.tick_params(axis='y', labelsize=20)
+    ax1.tick_params(axis='x', labelsize=16)

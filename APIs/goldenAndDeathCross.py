@@ -4,15 +4,16 @@ from APIs import general_APIs as general
 
 plt.style.use('seaborn-darkgrid')
 
-# Tick interval on date axis when plotting
-every_nth = 20
-
 def getMovingAverage(dataFr, colName='Close', nDays=50):
     dataFr['movingAverage_{}'.format(nDays)] = dataFr[colName].rolling(nDays).mean()
     
     return dataFr
 
-def analyzeGoldenAndDeathCross(companyName='GOOG', nDays_short=50, nDays_long=200, start='2019-10-31'):
+def analyzeGoldenAndDeathCross(companyName='GOOG', 
+                               nDays_short=50, 
+                               nDays_long=200, 
+                               start='2019-10-31', 
+                               every_nth = 20):
     # Load dataframe for company
     dataFr = general.loadCompanyData(companyName, start=start)
     
@@ -38,3 +39,5 @@ def analyzeGoldenAndDeathCross(companyName='GOOG', nDays_short=50, nDays_long=20
         if n % every_nth != 0:
             label.set_visible(False)
     plt.legend(prop={'size': 20})
+    ax.tick_params(axis='y', labelsize=20)
+    ax.tick_params(axis='x', labelsize=16)
