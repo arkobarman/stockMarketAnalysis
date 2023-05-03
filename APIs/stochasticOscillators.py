@@ -159,8 +159,8 @@ def computeAndPlotFastStochasticOscillator(companyName='GOOG', n1=14, n2=3, star
     lowList = dataFr['Low'].to_list()
     dateList = dataFr['Date'].to_list()
     closeList = dataFr['Close'].to_list()
-    lowerError = [a-b for a, b in zip(closeList, lowList)]
-    upperError = [a-b for a, b in zip(highList, closeList)]
+    lowerError = [a-min(a,b) for a, b in zip(closeList, lowList)]
+    upperError = [max(a,b)-b for a, b in zip(highList, closeList)]
     ax0.errorbar(x=dateList, y=closeList, yerr=[lowerError, upperError], fmt='o')
     for n, label in enumerate(ax0.xaxis.get_ticklabels()):
             if n % every_nth != 0:
