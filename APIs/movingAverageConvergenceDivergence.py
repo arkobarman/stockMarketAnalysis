@@ -10,7 +10,7 @@ plt.style.use('seaborn-darkgrid')
 every_nth = 20
 
 # Exponential moving average calculator
-def getExponentialMovingAverage(dataFr, colName='Close', nDays=12):
+def getExponentialMovingAverage(dataFr, colName='close', nDays=12):
     # Calculate SMA
     sma = dataFr[colName].rolling(nDays).mean()
     modifiedCol = dataFr[colName].copy()
@@ -56,10 +56,10 @@ def getMACD(companyName='GOOG', start='2020-01-01', n1=12, n2=26, n3=9, every_nt
 #     ax0.plot(dataFr['Date'].to_list(),
 #                 dataFr['Close'].to_list(),
 #                 label='Closing');
-    highList = dataFr['High'].to_list()
-    lowList = dataFr['Low'].to_list()
+    highList = dataFr['high'].to_list()
+    lowList = dataFr['low'].to_list()
     dateList = dataFr['Date'].to_list()
-    closeList = dataFr['Close'].to_list()
+    closeList = dataFr['close'].to_list()
     lowerError = [a-min(a,b) for a, b in zip(closeList, lowList)]
     upperError = [max(a,b)-b for a, b in zip(highList, closeList)]
     ax0.errorbar(x=dateList, y=closeList, yerr=[lowerError, upperError], fmt='o')

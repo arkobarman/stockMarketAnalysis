@@ -8,7 +8,7 @@ from APIs import general_APIs as general
 plt.style.use('seaborn-darkgrid')
 
 # Exponential moving average calculator
-def getExponentialMovingAverage(dataFr, colName='Close', nDays=12):
+def getExponentialMovingAverage(dataFr, colName='close', nDays=12):
     # Calculate SMA
     sma = dataFr[colName].rolling(nDays).mean()
     modifiedCol = dataFr[colName].copy()
@@ -55,10 +55,10 @@ def computeAndPlotPercentagePriceOscillator(companyName='GOOG', start='2020-01-0
 #     ax0.plot(dataFr['Date'].to_list(),
 #                 dataFr['Close'].to_list(),
 #                 label='Closing');
-    highList = dataFr['High'].to_list()
-    lowList = dataFr['Low'].to_list()
+    highList = dataFr['high'].to_list()
+    lowList = dataFr['low'].to_list()
     dateList = dataFr['Date'].to_list()
-    closeList = dataFr['Close'].to_list()
+    closeList = dataFr['close'].to_list()
     lowerError = [a-min(a,b) for a, b in zip(closeList, lowList)]
     upperError = [max(a,b)-b for a, b in zip(highList, closeList)]
     ax0.errorbar(x=dateList, y=closeList, yerr=[lowerError, upperError], fmt='o')

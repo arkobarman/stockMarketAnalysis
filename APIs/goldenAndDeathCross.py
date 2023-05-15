@@ -4,7 +4,7 @@ from APIs import general_APIs as general
 
 plt.style.use('seaborn-darkgrid')
 
-def getMovingAverage(dataFr, colName='Close', nDays=50):
+def getMovingAverage(dataFr, colName='close', nDays=50):
     dataFr['movingAverage_{}'.format(nDays)] = dataFr[colName].rolling(nDays).mean()
     
     return dataFr
@@ -18,13 +18,13 @@ def analyzeGoldenAndDeathCross(companyName='GOOG',
     dataFr = general.loadCompanyData(companyName, start=start)
     
     # Create moving average columns
-    dataFr = getMovingAverage(dataFr, colName='Close', nDays=nDays_short)
-    dataFr = getMovingAverage(dataFr, colName='Close', nDays=nDays_long)
+    dataFr = getMovingAverage(dataFr, colName='close', nDays=nDays_short)
+    dataFr = getMovingAverage(dataFr, colName='close', nDays=nDays_long)
     
     fig = plt.figure(figsize=(20,10))
     ax = fig.add_subplot(111)
     ax.plot(dataFr['Date'].to_list(),
-            dataFr['Close'].to_list(),
+            dataFr['close'].to_list(),
             label='Closing');
     ax.plot(dataFr['Date'].to_list(),
             dataFr['movingAverage_{}'.format(nDays_short)].to_list(),

@@ -13,9 +13,9 @@ plt.style.use('seaborn-darkgrid')
 
 # Stochastic K
 def STOK(dataFr, n=14):
-    close = dataFr['Close']
-    low = dataFr['Low']
-    high = dataFr['High']
+    close = dataFr['close']
+    low = dataFr['low']
+    high = dataFr['high']
     STO_K = ( (close - low.rolling(n).min()) / (high.rolling(n).max() - low.rolling(n).min()) ) * 100
     return STO_K
 
@@ -155,10 +155,10 @@ def computeAndPlotFastStochasticOscillator(companyName='GOOG', n1=14, n2=3, star
 #     ax0.plot(dataFr['Date'].to_list(),
 #                 dataFr['Close'].to_list(),
 #                 label='Closing');
-    highList = dataFr['High'].to_list()
-    lowList = dataFr['Low'].to_list()
+    highList = dataFr['high'].to_list()
+    lowList = dataFr['low'].to_list()
     dateList = dataFr['Date'].to_list()
-    closeList = dataFr['Close'].to_list()
+    closeList = dataFr['close'].to_list()
     lowerError = [a-min(a,b) for a, b in zip(closeList, lowList)]
     upperError = [max(a,b)-b for a, b in zip(highList, closeList)]
     ax0.errorbar(x=dateList, y=closeList, yerr=[lowerError, upperError], fmt='o')
@@ -215,10 +215,10 @@ def computeAndPlotSlowStochasticOscillator(companyName='GOOG', n1=14, n2=3, star
 #     ax0.plot(dataFr['Date'].to_list(),
 #                 dataFr['Close'].to_list(),
 #                 label='Closing');
-    highList = dataFr['High'].to_list()
-    lowList = dataFr['Low'].to_list()
+    highList = dataFr['high'].to_list()
+    lowList = dataFr['low'].to_list()
     dateList = dataFr['Date'].to_list()
-    closeList = dataFr['Close'].to_list()
+    closeList = dataFr['close'].to_list()
     lowerError = [a-min(a,b) for a, b in zip(closeList, lowList)]
     upperError = [max(a,b)-b for a, b in zip(highList, closeList)]
     ax0.errorbar(x=dateList, y=closeList, yerr=[lowerError, upperError], fmt='o')
@@ -274,10 +274,10 @@ def computeAndPlotFullStochasticOscillator(companyName='GOOG', n1=14, n2=3, n3=3
 #     ax0.plot(dataFr['Date'].to_list(),
 #                 dataFr['Close'].to_list(),
 #                 label='Closing');
-    highList = dataFr['High'].to_list()
-    lowList = dataFr['Low'].to_list()
+    highList = dataFr['high'].to_list()
+    lowList = dataFr['low'].to_list()
     dateList = dataFr['Date'].to_list()
-    closeList = dataFr['Close'].to_list()
+    closeList = dataFr['close'].to_list()
     lowerError = [a-min(a,b) for a, b in zip(closeList, lowList)]
     upperError = [max(a,b)-b for a, b in zip(highList, closeList)]
     ax0.errorbar(x=dateList, y=closeList, yerr=[lowerError, upperError], fmt='o')
