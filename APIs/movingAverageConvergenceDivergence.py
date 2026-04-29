@@ -4,7 +4,7 @@ from APIs import general_APIs as general
 from matplotlib import gridspec
 from matplotlib.axes import Axes
 
-plt.style.use('seaborn-darkgrid')
+plt.style.use('seaborn-v0_8-darkgrid')
 
 # Tick interval on date axis when plotting
 every_nth = 20
