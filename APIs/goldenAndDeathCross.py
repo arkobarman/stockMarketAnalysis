@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from APIs import general_APIs as general
 
-plt.style.use('seaborn-darkgrid')
+plt.style.use('seaborn-v0_8-darkgrid')
 
 def getMovingAverage(dataFr, colName='close', nDays=50):
     dataFr['movingAverage_{}'.format(nDays)] = dataFr[colName].rolling(nDays).mean()
