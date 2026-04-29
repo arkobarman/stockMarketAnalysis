@@ -9,7 +9,7 @@ import mplfinance as mpf
 
 from APIs import general_APIs as general
 
-plt.style.use('seaborn-darkgrid')
+plt.style.use('seaborn-v0_8-darkgrid')
 
 # Stochastic K
 def STOK(dataFr, n=14):
